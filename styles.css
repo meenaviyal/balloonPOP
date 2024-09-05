@@ -12,7 +12,7 @@ body {
 }
 
 .game-container {
-    background-color: white;
+    background-color: rgb(244, 244, 244);
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 24px;
@@ -21,7 +21,7 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
     text-align: center;
     margin-bottom: 24px;
@@ -152,3 +152,20 @@ h1 {
 .shake {
     animation: shake 0.5s;
 }
+
+.bungee-tint-regular {
+    font-family: "Bungee Tint", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+} 
+
+.nabla-font {
+    font-family: "Nabla", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "EDPT" 100,
+      "EHLT" 12;
+  }
+  
