@@ -101,10 +101,6 @@ h1 {
     display: none;
 }
 
-@keyframes vanish {
-    to { opacity: 0; transform: scale(0); }
-}
-
 @keyframes fadeInOut {
     0% { opacity: 0; transform: translateY(0); }
     50% { opacity: 1; transform: translateY(-20px); }
@@ -117,8 +113,26 @@ h1 {
     75% { transform: translateX(5px); }
 }
 
-.vanish {
+@keyframes vanish {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0); }
+}
+
+.tile {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.tile.vanish {
     animation: vanish 0.5s forwards;
+}
+
+.tile.vanish-end {
+    animation: vanish 0.5s forwards;
+    animation-delay: calc(var(--vanish-delay) * 0.05s);
 }
 
 .plus-one {

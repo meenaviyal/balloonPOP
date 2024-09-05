@@ -129,10 +129,19 @@ function startTimer() {
 
 function endGame() {
     clearInterval(gameTimer);
-    tileContainer.querySelectorAll('.w-10').forEach(tile => tile.classList.add('vanish'));
-    gameOverElement.classList.remove('hidden');
-    finalScoreElement.textContent = `Final Score: ${score}`;
+    
+    const tiles = tileContainer.querySelectorAll('.tile');
+    tiles.forEach((tile, index) => {
+        tile.style.setProperty('--vanish-delay', index);
+        tile.classList.add('vanish-end');
+    });
+
+    setTimeout(() => {
+        gameOverElement.classList.remove('hidden');
+        finalScoreElement.textContent = `Final Score: ${score}`;
+    }, tiles.length * 50 + 500); // Wait for all tiles to vanish before showing game over
 }
+
 
 newGameButton.addEventListener('click', function() {
     window.location.reload();
