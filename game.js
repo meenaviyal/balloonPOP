@@ -3,13 +3,27 @@
 const tileGenerator = new SVGTileGenerator(40);
 const tileContainer = document.getElementById('tileContainer');
 const newGameButton = document.getElementById('newGame');
+const timerElement = document.getElementById('timer');
+const scoreElement = document.getElementById('score');
+const gameOverElement = document.getElementById('gameOver');
+const finalScoreElement = document.getElementById('finalScore');
+
 let balloonLocations = new Map();
 let wrongGuesses = 0;
+let score = 0;
+let timeLeft = 20;
+let gameTimer;
 
 function createNewGame(rows = 10, cols = 10) {
     tileContainer.innerHTML = '';
     balloonLocations.clear();
     wrongGuesses = 0;
+    score = 0;
+    timeLeft = 20;
+    updateScore();
+    updateTimer();
+    gameOverElement.classList.add('hidden');
+
     for (let i = 0; i < rows * cols; i++) {
         const tileDiv = document.createElement('div');
         tileDiv.className = 'w-10 h-10 relative cursor-pointer';
@@ -26,9 +40,13 @@ function createNewGame(rows = 10, cols = 10) {
         tileDiv.addEventListener('click', handleTileClick);
         tileContainer.appendChild(tileDiv);
     }
+
+    startTimer();
 }
 
 function handleTileClick(event) {
+    if (timeLeft <= 0) return;
+
     const tileDiv = event.currentTarget;
     const tileIndex = parseInt(tileDiv.dataset.index);
     
@@ -41,6 +59,8 @@ function handleTileClick(event) {
         tileDiv.appendChild(plusOne);
         tileDiv.style.pointerEvents = 'none';
         balloonLocations.delete(tileIndex);
+        score++;
+        updateScore();
     } else {
         // Incorrect guess
         wrongGuesses++;
@@ -49,6 +69,8 @@ function handleTileClick(event) {
             tileContainer.querySelectorAll('.w-10').forEach(tile => tile.classList.remove('shake'));
         }, 500);
         tileDiv.innerHTML = getSadSmiley(wrongGuesses);
+        score = Math.max(0, score - 1);
+        updateScore();
     }
 }
 
@@ -74,6 +96,32 @@ function getSadSmiley(wrongGuesses) {
     }
 
     return svgStart + face + leftEye + rightEye + mouth + (tears || '') + svgEnd;
+}
+
+function updateScore() {
+    scoreElement.textContent = `Score: ${score}`;
+}
+
+function updateTimer() {
+    timerElement.textContent = `Time: ${timeLeft}s`;
+}
+
+function startTimer() {
+    clearInterval(gameTimer);
+    gameTimer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+            endGame();
+        }
+    }, 1000);
+}
+
+function endGame() {
+    clearInterval(gameTimer);
+    tileContainer.querySelectorAll('.w-10').forEach(tile => tile.classList.add('vanish'));
+    gameOverElement.classList.remove('hidden');
+    finalScoreElement.textContent = `Final Score: ${score}`;
 }
 
 newGameButton.addEventListener('click', function() {
