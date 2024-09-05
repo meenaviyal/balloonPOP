@@ -14,7 +14,17 @@ let score = 0;
 let timeLeft = 20;
 let gameTimer;
 
-function createNewGame(rows = 10, cols = 10) {
+function getDevicePixelRatio() {
+    return window.devicePixelRatio || 1;
+}
+
+function createNewGame() {
+    const isMobile = window.innerWidth < 640;
+    const rows = 10;
+    const cols = isMobile ? 5 : 10;
+    const pixelRatio = getDevicePixelRatio();
+    const tileSize = Math.round(40 * pixelRatio);
+
     tileContainer.innerHTML = '';
     balloonLocations.clear();
     wrongGuesses = 0;
@@ -26,11 +36,11 @@ function createNewGame(rows = 10, cols = 10) {
 
     for (let i = 0; i < rows * cols; i++) {
         const tileDiv = document.createElement('div');
-        tileDiv.className = 'w-10 h-10 relative cursor-pointer';
-        const tileSvg = tileGenerator.generateTile();
+        tileDiv.className = 'tile';
+        const tileSvg = tileGenerator.generateTile(tileSize);
         const hasBalloon = Math.random() < 0.2; // 20% chance for a balloon
         if (hasBalloon) {
-            const balloonSvg = tileGenerator.generateBalloon();
+            const balloonSvg = tileGenerator.generateBalloon(tileSize);
             tileDiv.innerHTML = tileSvg.replace('</svg>', `${balloonSvg}</svg>`);
             balloonLocations.set(i, true);
         } else {
@@ -55,7 +65,7 @@ function handleTileClick(event) {
         tileDiv.classList.add('vanish');
         const plusOne = document.createElement('div');
         plusOne.textContent = '+1';
-        plusOne.className = 'absolute top-0 left-0 w-full h-full flex items-center justify-center text-green-500 font-bold plus-one';
+        plusOne.className = 'plus-one';
         tileDiv.appendChild(plusOne);
         tileDiv.style.pointerEvents = 'none';
         balloonLocations.delete(tileIndex);
@@ -64,11 +74,11 @@ function handleTileClick(event) {
     } else {
         // Incorrect guess
         wrongGuesses++;
-        tileContainer.querySelectorAll('.w-10').forEach(tile => tile.classList.add('shake'));
+        tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.add('shake'));
         setTimeout(() => {
-            tileContainer.querySelectorAll('.w-10').forEach(tile => tile.classList.remove('shake'));
+            tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
         }, 500);
-        tileDiv.innerHTML = getSadSmiley(wrongGuesses);
+        tileDiv.innerHTML = getSadSmiley(wrongGuesses, getDevicePixelRatio());
         score = Math.max(0, score - 1);
         updateScore();
     }

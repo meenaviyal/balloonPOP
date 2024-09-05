@@ -4,40 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balloon POP!</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes vanish {
-            to { opacity: 0; transform: scale(0); }
-        }
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(-20px); }
-            100% { opacity: 0; transform: translateY(-40px); }
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .vanish { animation: vanish 0.5s forwards; }
-        .plus-one { animation: fadeInOut 1s forwards; }
-        .shake { animation: shake 0.5s; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full">
-        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Balloon POP!</h1>
-        <div class="flex justify-between mb-4">
-            <div id="timer" class="text-xl font-semibold">Time: 20s</div>
-            <div id="score" class="text-xl font-semibold">Score: 0</div>
+<body>
+    <div class="game-container">
+        <h1>Balloon POP!</h1>
+        <div class="game-info">
+            <div id="timer">Time: 20s</div>
+            <div id="score">Score: 0</div>
         </div>
-        <div id="tileContainer" class="grid grid-cols-10 gap-1 mb-6"></div>
-        <button id="newGame" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-            New Game
-        </button>
-        <div id="gameOver" class="hidden text-center mt-4">
-            <h2 class="text-2xl font-bold text-red-600">Game Over!</h2>
-            <p id="finalScore" class="text-xl mt-2"></p>
+        <div id="tileContainer"></div>
+        <button id="newGame">New Game</button>
+        <div id="gameOver" class="hidden">
+            <h2>Game Over!</h2>
+            <p id="finalScore"></p>
         </div>
     </div>
 
