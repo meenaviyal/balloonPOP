@@ -26,7 +26,8 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4">
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full">
-        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">SVG Tile Puzzle</h1>
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Balloon POP!</h1>
+        <p class="font-bold text-center mb-6 text-gray-800">Pop the tiles with balloons...</p>
         <div id="tileContainer" class="grid grid-cols-10 gap-1 mb-6"></div>
         <button id="newGame" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300">
             New Game
@@ -111,7 +112,9 @@
             return svgStart + face + leftEye + rightEye + mouth + (tears || '') + svgEnd;
         }
 
-        newGameButton.addEventListener('click', createNewGame);
+        newGameButton.addEventListener('click', function() {
+            window.location.reload();
+        });
 
         // Initial game setup
         createNewGame();
