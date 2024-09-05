@@ -127,13 +127,14 @@ h1 {
 }
 
 .tile.vanish {
-    animation: vanish 0.5s forwards;
+    animation: vanish 0.3s forwards;
 }
-
+  
 .tile.vanish-end {
-    animation: vanish 0.5s forwards;
-    animation-delay: calc(var(--vanish-delay) * 0.05s);
+animation: vanish 0.3s forwards;
+animation-delay: calc(var(--vanish-delay) * 0.03s);
 }
+  
 
 .plus-one {
     position: absolute;
