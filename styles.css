@@ -22,10 +22,8 @@ body {
 
 h1 {
     font-size: 4rem;
-    font-weight: bold;
     text-align: center;
     margin-bottom: 24px;
-    text-shadow: 2px 2px 4px rgba(125, 124, 124, 0.7);
 }
 
 .game-info {
@@ -168,5 +166,6 @@ animation-delay: calc(var(--vanish-delay) * 0.03s);
     font-variation-settings:
       "EDPT" 100,
       "EHLT" 12;
+    text-shadow: 2px 2px 4px rgba(125, 124, 124, 0.7);
   }
   
