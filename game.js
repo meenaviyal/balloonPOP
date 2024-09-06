@@ -54,12 +54,11 @@ function createNewGame() {
     startTimer();
 }
 
+
 function handleTileClick(event) {
     if (timeLeft <= 0) return;
-
     const tileDiv = event.currentTarget;
     const tileIndex = parseInt(tileDiv.dataset.index);
-    
     if (balloonLocations.get(tileIndex)) {
         // Correct guess
         tileDiv.classList.add('vanish');
@@ -78,34 +77,23 @@ function handleTileClick(event) {
         setTimeout(() => {
             tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
         }, 500);
-        tileDiv.innerHTML = getSadSmiley(wrongGuesses, getDevicePixelRatio());
+        tileDiv.innerHTML = getSadSmiley(wrongGuesses);
         score = Math.max(0, score - 1);
         updateScore();
     }
 }
 
 function getSadSmiley(wrongGuesses) {
-    const svgStart = '<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">';
-    const svgEnd = '</svg>';
-    const face = '<circle cx="20" cy="20" r="18" fill="yellow"/>';
-    const leftEye = '<circle cx="12" cy="15" r="3" fill="black"/>';
-    const rightEye = '<circle cx="28" cy="15" r="3" fill="black"/>';
-    
-    let mouth, tears;
-    if (wrongGuesses <= 3) {
-        // Slightly sad
-        mouth = '<path d="M10 28 Q20 24 30 28" stroke="black" stroke-width="3" fill="none"/>';
-    } else if (wrongGuesses <= 6) {
-        // Very sad
-        mouth = '<path d="M10 30 Q20 22 30 30" stroke="black" stroke-width="3" fill="none"/>';
-    } else {
-        // Crying
-        mouth = '<path d="M10 32 Q20 20 30 32" stroke="black" stroke-width="3" fill="none"/>';
-        tears = '<path d="M10 18 Q8 22 10 26" stroke="blue" stroke-width="2" fill="none"/>' +
-                '<path d="M30 18 Q32 22 30 26" stroke="blue" stroke-width="2" fill="none"/>';
-    }
+    const negativeEmoticonsSorted = [
+        "😐", "😑", "😕", "🙁", "☹️", "😒", "😞", "😟", "😔", "😓",
+        "😥", "😣", "😖", "😧", "😩", "😫", "😰", "😭", "😢"
+    ];
 
-    return svgStart + face + leftEye + rightEye + mouth + (tears || '') + svgEnd;
+    // Calculate the index based on wrongGuesses
+    const index = Math.min(Math.floor(wrongGuesses / 2), negativeEmoticonsSorted.length - 1);
+
+    // Return the emoticon wrapped in a span with a class for styling
+    return `<span class="noto-emoji">${negativeEmoticonsSorted[index]}</span>`;
 }
 
 function updateScore() {
