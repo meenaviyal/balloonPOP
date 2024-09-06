@@ -6,23 +6,46 @@
     <title>🎈Balloon POP!🎈</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap');
-    </style> 
+    </style>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <img src="logo.png" alt="Balloon POP!" class="logo">
-        <div class="game-info">
-            <div id="timer" class="bungee-tint-regular">Time: 20s</div>
-            <div class="bungee-tint-regular"><span id="score">Score: 0</span>/<span id="totalCount">0</span></div>
+    <div class="container">
+        <div id="initialScreen">
+            <img src="logo.png" alt="Balloon POP!" class="logo">
+            <h1 class="bungee-tint-regular">Balloon POP!</h1>
+            <div class="rules">
+                <h2 class="bungee-tint-regular">Game Rules:</h2>
+                <ul>
+                    <li>Pop tiles with balloons</li>
+                    <li>Score points for each balloon popped</li>
+                    <li>Complete the game within 20 seconds</li>
+                    <li>Try to pop all balloons before time runs out!</li>
+                </ul>
+            </div>
+            <button id="startButton" class="start-button bungee-tint-regular">Start Now!</button>
         </div>
-        <div id="tileContainer"></div>
-        <button id="newGame">New Game</button>
+
+        <div id="gameScreen" class="game-container">
+            <img src="logo.png" alt="Balloon POP!" class="logo">
+            <div class="game-info">
+                <div id="timer" class="bungee-tint-regular">Time: 20s</div>
+                <div class="bungee-tint-regular">
+                    <span id="score" class="bungee-tint-regular">Score: 0</span>/
+                    <span id="totalCount" class="bungee-tint-regular">0</span>
+                </div>
+            </div>
+            <div id="tileContainer"></div>
+            <button id="newGame" class="bungee-tint-regular">New Game</button>
+        </div>
+
         <div id="gameOver" class="hidden">
-            <h2>Game Over!</h2>
-            <p id="finalScore"></p>
+            <h2 class="bungee-tint-regular">Game Over!</h2>
+            <p id="finalScore" class="bungee-tint-regular"></p>
+            <button id="playAgain" class="start-button bungee-tint-regular">Play Again</button>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <script src="tilegen.js"></script>
     <script src="game.js"></script>

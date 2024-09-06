@@ -1,9 +1,10 @@
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f4f6;
+    background: linear-gradient(to bottom, #4a90e2, #7e57c2);
+    color: white;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -12,11 +13,8 @@ body {
     align-items: center;
 }
 
-.game-container {
-    background-color: rgb(244, 244, 244);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 24px;
+.container {
+    text-align: center;
     width: 100%;
     max-width: 500px;
 }
@@ -28,6 +26,42 @@ body {
     max-width: 300px;
     height: auto;
 }
+
+.rules {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 400px;
+}
+
+.start-button, #newGame {
+    width: 100%;
+    background-color: #ffd700;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Bungee Inline', cursive;
+    font-size: 18px;
+}
+
+.start-button:hover, #newGame:hover {
+    background-color: #ffc400;
+}
+
+.game-container {
+    background-color: rgb(244, 244, 244);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+}
+
 .game-info {
     display: flex;
     justify-content: space-between;
@@ -66,6 +100,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.5s, transform 0.5s;
 }
 
 .tile svg {
@@ -78,35 +113,26 @@ body {
 
 .noto-emoji {
     font-family: 'Noto Color Emoji', sans-serif;
-    font-size: 24px; /* Adjust as needed */
-    z-index: 1; /* Ensure the emoji appears above the SVG */
-}
-
-#newGame {
-    width: 100%;
-    background-color: #3b82f6;
-    color: white;
-    font-weight: bold;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#newGame:hover {
-    background-color: #2563eb;
+    font-size: 24px;
+    z-index: 1;
 }
 
 #gameOver {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
     text-align: center;
-    margin-top: 16px;
 }
 
 #gameOver h2 {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #dc2626;
+    color: #ffd700;
 }
 
 .hidden {
@@ -130,23 +156,14 @@ body {
     100% { opacity: 0; transform: scale(0); }
 }
 
-.tile {
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    position: relative;
-    cursor: pointer;
-    transition: opacity 0.5s, transform 0.5s;
-}
-
 .tile.vanish {
     animation: vanish 0.3s forwards;
 }
-  
+
 .tile.vanish-end {
-animation: vanish 0.3s forwards;
-animation-delay: calc(var(--vanish-delay) * 0.03s);
+    animation: vanish 0.3s forwards;
+    animation-delay: calc(var(--vanish-delay) * 0.03s);
 }
-  
 
 .plus-one {
     position: absolute;

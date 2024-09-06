@@ -1,13 +1,17 @@
 // game.js
 
 const tileGenerator = new SVGTileGenerator(40);
+const initialScreen = document.getElementById('initialScreen');
+const gameScreen = document.getElementById('gameScreen');
 const tileContainer = document.getElementById('tileContainer');
 const newGameButton = document.getElementById('newGame');
+const startButton = document.getElementById('startButton');
 const timerElement = document.getElementById('timer');
 const scoreElement = document.getElementById('score');
 const gameOverElement = document.getElementById('gameOver');
 const finalScoreElement = document.getElementById('finalScore');
 const totalCountElement = document.getElementById('totalCount');
+const playAgainButton = document.getElementById('playAgain');
 
 let balloonLocations = new Map();
 let wrongGuesses = 0;
@@ -57,7 +61,6 @@ function createNewGame() {
     startTimer();
 }
 
-
 function handleTileClick(event) {
     if (timeLeft <= 0) return;
     const tileDiv = event.currentTarget;
@@ -92,10 +95,8 @@ function getSadSmiley(wrongGuesses) {
         "😥", "😣", "😖", "😧", "😩", "😫", "😰", "😭", "😢"
     ];
 
-    // Calculate the index based on wrongGuesses
     const index = Math.min(Math.floor(wrongGuesses / 2), negativeEmoticonsSorted.length - 1);
 
-    // Return the emoticon wrapped in a span with a class for styling
     return `<span class="noto-emoji">${negativeEmoticonsSorted[index]}</span>`;
 }
 
@@ -152,16 +153,27 @@ function endGame() {
     setTimeout(() => {
         gameOverElement.classList.remove('hidden');
         finalScoreElement.textContent = `Final Score: ${score}`;
-    }, tiles.length * 50 + 500); // Wait for all tiles to vanish before showing game over
+    }, tiles.length * 50 + 500);
     if (score === totalCount) {
         doConfetti();
     }
 }
 
+function startGame() {
+    initialScreen.style.display = 'none';
+    gameScreen.style.display = 'block';
+    createNewGame();
+}
 
-newGameButton.addEventListener('click', function() {
-    window.location.reload();
+startButton.addEventListener('click', startGame);
+
+newGameButton.addEventListener('click', createNewGame);
+
+playAgainButton.addEventListener('click', () => {
+    gameOverElement.classList.add('hidden');
+    createNewGame();
 });
 
-// Initial game setup
-createNewGame();
+// Initial setup
+initialScreen.style.display = 'block';
+gameScreen.style.display = 'none';
