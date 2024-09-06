@@ -1,6 +1,5 @@
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');
 
 body {
     background: linear-gradient(to bottom, #4a90e2, #7e57c2);
@@ -31,7 +30,6 @@ body {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     padding: 20px;
-    margin-bottom: 20px;
     max-width: 400px;
 }
 
@@ -187,4 +185,57 @@ body {
     font-family: "Bungee Tint", sans-serif;
     font-weight: 400;
     font-style: normal;
+}
+
+.white-background {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bungee-inline-black {
+    font-family: 'Bungee Inline', cursive;
+    color: black;
+    list-style-type: none;
+    padding: 0;
+}
+
+.bungee-inline-black li {
+    margin-bottom: 10px;
+}
+
+.sample-tiles {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.tile-examples-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.tile-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tile-column h4 {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.tile-examples {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+}
+
+.tile-examples .tile {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
 }

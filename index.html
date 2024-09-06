@@ -5,26 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎈Balloon POP!🎈</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bungee+Tint&family=Bungee+Inline&display=swap');
     </style>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div id="initialScreen">
+        <div id="initialScreen" class="white-background">
             <img src="logo.png" alt="Balloon POP!" class="logo">
-            <h1 class="bungee-tint-regular">Balloon POP!</h1>
             <div class="rules">
                 <h2 class="bungee-tint-regular">Game Rules:</h2>
-                <ul>
-                    <li>Pop tiles with balloons</li>
+                <ul class="bungee-inline-black">
+                    <li>Pop tiles with balloons!</li>
                     <li>Score points for each balloon popped</li>
                     <li>Complete the game within 20 seconds</li>
-                    <li>Try to pop all balloons before time runs out!</li>
                 </ul>
+            </div>
+            <div class="sample-tiles">
+                <div class="tile-examples-container">
+                    <div class="tile-column">
+                        <h2 class="bungee-tint-regular">With Balloons</h2>
+                        <div id="sampleTilesWithBalloons" class="tile-examples"></div>
+                    </div>
+                    <div class="tile-column">
+                        <h2 class="bungee-tint-regular">Without Balloons</h2>
+                        <div id="sampleTilesWithoutBalloons" class="tile-examples"></div>
+                    </div>
+                </div>
             </div>
             <button id="startButton" class="start-button bungee-tint-regular">Start Now!</button>
         </div>
+        
 
         <div id="gameScreen" class="game-container">
             <img src="logo.png" alt="Balloon POP!" class="logo">

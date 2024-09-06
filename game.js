@@ -177,3 +177,37 @@ playAgainButton.addEventListener('click', () => {
 // Initial setup
 initialScreen.style.display = 'block';
 gameScreen.style.display = 'none';
+
+function createSampleTiles() {
+    const withBalloonsContainer = document.getElementById('sampleTilesWithBalloons');
+    const withoutBalloonsContainer = document.getElementById('sampleTilesWithoutBalloons');
+    const tileSize = 40; // Adjust this size as needed
+
+    function createTile(container, hasBalloon) {
+        const tileDiv = document.createElement('div');
+        tileDiv.className = 'tile';
+        
+        const tileSvg = tileGenerator.generateTile(tileSize);
+        if (hasBalloon) {
+            const balloonSvg = tileGenerator.generateBalloon(tileSize);
+            tileDiv.innerHTML = tileSvg.replace('</svg>', `${balloonSvg}</svg>`);
+        } else {
+            tileDiv.innerHTML = tileSvg;
+        }
+        
+        container.appendChild(tileDiv);
+    }
+
+    // Create 4 tiles with balloons
+    for (let i = 0; i < 4; i++) {
+        createTile(withBalloonsContainer, true);
+    }
+
+    // Create 4 tiles without balloons
+    for (let i = 0; i < 4; i++) {
+        createTile(withoutBalloonsContainer, false);
+    }
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', createSampleTiles);
