@@ -1,1 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200"><defs><filter id="shadow"><feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-color="black"/></filter></defs><text x="50" y="150" font-family="Nabla" font-size="100" fill="black" filter="url(#shadow)">Balloon POP!</text></svg>
