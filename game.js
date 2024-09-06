@@ -112,7 +112,12 @@ function handleTileClick(event) {
 
     if (tileIndex === bombLocation) {
         // Game over - bomb clicked
-        endGame(true);
+        tileDiv.classList.add('bomb-shake');
+        // const explosionSound = new Audio('explosion.mp3');
+        // explosionSound.play();
+        setTimeout(() => {
+            endGame(true);
+        }, 1000); // Wait for the shake animation to finish
         return;
     }
 
@@ -244,7 +249,7 @@ function doConfetti(){
     }, 250);
 }
 
-function endGame() {
+function endGame(hitBomb = false) {
     clearInterval(gameTimer);
     
     const tiles = tileContainer.querySelectorAll('.tile');
@@ -254,9 +259,9 @@ function endGame() {
     });
     setTimeout(() => {
         gameOverElement.classList.remove('hidden');
-        finalScoreElement.textContent = `Final Score: ${score}`;
+        finalScoreElement.textContent = hitBomb ? "BOOM! Game Over!" : `Final Score: ${score}`;
     }, tiles.length * 50 + 500);
-    if (score === totalCount) {
+    if (score === totalCount && !hitBomb) {
         doConfetti();
     }
 }
