@@ -239,3 +239,25 @@ body {
     height: 40px;
     border: 1px solid #ccc;
 }
+
+.minus-one {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: red;
+    animation: fadeUp 1s ease-out;
+    pointer-events: none;
+}
+
+@keyframes fadeUp {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+}

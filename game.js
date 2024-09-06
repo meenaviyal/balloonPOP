@@ -14,6 +14,8 @@ const totalCountElement = document.getElementById('totalCount');
 const playAgainButton = document.getElementById('playAgain');
 
 let balloonLocations = new Map();
+let bombLocation;
+let skullLocations = new Set();
 let wrongGuesses = 0;
 let score = 0;
 let totalCount = 0;
@@ -42,6 +44,7 @@ function getDevicePixelRatio() {
     return window.devicePixelRatio || 1;
 }
 
+
 function createNewGame() {
     const isMobile = window.innerWidth < 640;
     const rows = 10;
@@ -51,6 +54,8 @@ function createNewGame() {
 
     tileContainer.innerHTML = '';
     balloonLocations.clear();
+    skullLocations.clear();
+    bombLocation = null;
     wrongGuesses = 0;
     score = 0;
     timeLeft = 20;
@@ -58,18 +63,38 @@ function createNewGame() {
     updateTimer();
     gameOverElement.classList.add('hidden');
 
-    for (let i = 0; i < rows * cols; i++) {
+    const totalTiles = rows * cols;
+    const allIndices = [...Array(totalTiles).keys()];
+    
+    // Place bomb
+    bombLocation = allIndices.splice(Math.floor(Math.random() * allIndices.length), 1)[0];
+    
+    // Place skulls
+    for (let i = 0; i < 2; i++) {
+        const skullIndex = allIndices.splice(Math.floor(Math.random() * allIndices.length), 1)[0];
+        skullLocations.add(skullIndex);
+    }
+
+    for (let i = 0; i < totalTiles; i++) {
         const tileDiv = document.createElement('div');
         tileDiv.className = 'tile';
-        const tileSvg = tileGenerator.generateTile(tileSize);
-        const hasBalloon = Math.random() < 0.2; // 20% chance for a balloon
-        if (hasBalloon) {
-            const balloonSvg = tileGenerator.generateBalloon(tileSize);
-            tileDiv.innerHTML = tileSvg.replace('</svg>', `${balloonSvg}</svg>`);
-            balloonLocations.set(i, true);
+        let tileSvg;
+
+        if (i === bombLocation) {
+            tileSvg = generateEmoticonTile('💣', tileSize);
+        } else if (skullLocations.has(i)) {
+            tileSvg = generateEmoticonTile('💀', tileSize);
         } else {
-            tileDiv.innerHTML = tileSvg;
+            tileSvg = tileGenerator.generateTile(tileSize);
+            const hasBalloon = Math.random() < 0.2; // 20% chance for a balloon
+            if (hasBalloon) {
+                const balloonSvg = tileGenerator.generateBalloon(tileSize);
+                tileSvg = tileSvg.replace('</svg>', `${balloonSvg}</svg>`);
+                balloonLocations.set(i, true);
+            }
         }
+
+        tileDiv.innerHTML = tileSvg;
         tileDiv.dataset.index = i;
         tileDiv.addEventListener('click', handleTileClick);
         tileContainer.appendChild(tileDiv);
@@ -79,34 +104,92 @@ function createNewGame() {
     startTimer();
 }
 
+
 function handleTileClick(event) {
     if (timeLeft <= 0) return;
     const tileDiv = event.currentTarget;
     const tileIndex = parseInt(tileDiv.dataset.index);
+
+    if (tileIndex === bombLocation) {
+        // Game over - bomb clicked
+        endGame(true);
+        return;
+    }
+
+    if (skullLocations.has(tileIndex)) {
+        // Skull clicked - reduce time and score
+        timeLeft = Math.max(0, timeLeft - 5);
+        score = Math.max(0, score - 1); // Reduce score by 1, but not below 0
+        updateTimer();
+        updateScore();
+        tileDiv.classList.add('vanish');
+        tileDiv.style.pointerEvents = 'none';
+        
+        // Display -1 score animation
+        const minusOne = document.createElement('div');
+        minusOne.textContent = '-1';
+        minusOne.className = 'minus-one';
+        tileDiv.appendChild(minusOne);
+        
+        errSoundPool.play(); // Play error sound for skull click
+        return;
+    }
+
     if (balloonLocations.get(tileIndex)) {
-      // Correct guess
-      popSoundPool.play();
-      tileDiv.classList.add('vanish');
-      const plusOne = document.createElement('div');
-      plusOne.textContent = '+1';
-      plusOne.className = 'plus-one';
-      tileDiv.appendChild(plusOne);
-      tileDiv.style.pointerEvents = 'none';
-      balloonLocations.delete(tileIndex);
-      score++;
-      updateScore();
+        // Correct guess - balloon
+        popSoundPool.play();
+        tileDiv.classList.add('vanish');
+        const plusOne = document.createElement('div');
+        plusOne.textContent = '+1';
+        plusOne.className = 'plus-one';
+        tileDiv.appendChild(plusOne);
+        tileDiv.style.pointerEvents = 'none';
+        balloonLocations.delete(tileIndex);
+        score++;
+        updateScore();
     } else {
-      // Incorrect guess
-      errSoundPool.play();
-      wrongGuesses++;
-      tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.add('shake'));
-      setTimeout(() => {
-        tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
-      }, 500);
-      tileDiv.innerHTML = getSadSmiley(wrongGuesses);
-      updateScore();
+        // Incorrect guess
+        errSoundPool.play();
+        wrongGuesses++;
+        tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.add('shake'));
+        setTimeout(() => {
+            tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
+        }, 500);
+        tileDiv.innerHTML = getSadSmiley(wrongGuesses);
+        updateScore();
+    }
+
+    if (balloonLocations.size === 0) {
+        endGame(false);
     }
 }
+
+
+function generateEmoticonTile(emoji, size = 50) {
+    if (emoji !== '💣' && emoji !== '💀') {
+      throw new Error('Invalid emoji. Please use either 💣 for bomb or 💀 for skull.');
+    }
+  
+    const baseTile = tileGenerator.generateTile();
+    
+    const emojiSize = size * 0.6;
+    const emojiX = (size - emojiSize) / 2;
+    const emojiY = (size - emojiSize) / 2;
+    
+    const emoticon = `
+      <defs>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&amp;display=swap');
+        </style>
+      </defs>
+      <text x="${emojiX}" y="${emojiY + emojiSize * 0.8}" 
+            font-family="'Noto Color Emoji', Arial" font-size="${emojiSize}px">
+        ${emoji}
+      </text>
+    `;
+    
+    return baseTile.replace('</svg>', `${emoticon}</svg>`);
+  }
 
 function getSadSmiley(wrongGuesses) {
     const negativeEmoticonsSorted = [
