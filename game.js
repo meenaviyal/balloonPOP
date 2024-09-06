@@ -7,6 +7,7 @@ const timerElement = document.getElementById('timer');
 const scoreElement = document.getElementById('score');
 const gameOverElement = document.getElementById('gameOver');
 const finalScoreElement = document.getElementById('finalScore');
+const totalCountElement = document.getElementById('totalCount');
 
 let balloonLocations = new Map();
 let wrongGuesses = 0;
@@ -50,7 +51,7 @@ function createNewGame() {
         tileDiv.addEventListener('click', handleTileClick);
         tileContainer.appendChild(tileDiv);
     }
-
+    totalCountElement.innerHTML = balloonLocations.size;
     startTimer();
 }
 
