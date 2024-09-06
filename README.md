@@ -25,7 +25,7 @@ Balloon POP! is a fast-paced, click-happy game where your mission is to pop as m
 1. [Click here to play online](http://meenaviyal.com/balloonPOP/), or follow the steps below to run it locally:
 2. Clone this repository (or just download the files, we won't judge)
 3. Open `index.html` in your favorite browser
-4. Click "New Game" and start POPping!
+4. Click "Start Game" and start POPping!
 5. Pop balloons to increase your score
 6. Avoid non-balloon tiles or risk losing points
 7. Try to get the highest score before time runs out!
@@ -36,13 +36,6 @@ Balloon POP! is a fast-paced, click-happy game where your mission is to pop as m
 - CSS3 for style (because even balloons need to look good)
 - JavaScript for interactivity (it's the air that inflates our game!)
 - SVG for graphics (scalable balloons, anyone?)
-
-### 🛠️ Future POPdates (Get it? Pop + Updates?)
-
-- 🌈 More balloon colors! Because why not?
-- 🔊 Sound effects (POP POP POP!)
-- 🏆 Global leaderboard (Show off your POPping skills to the world!)
-- 🎵 Background music (We're thinking something... inflatable?)
 
 ### 👥 Contribute
 
