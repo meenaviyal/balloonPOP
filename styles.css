@@ -159,8 +159,8 @@ body {
 }
 
 .tile.vanish-end {
-    animation: vanish 0.3s forwards;
-    animation-delay: calc(var(--vanish-delay) * 0.03s);
+    animation: vanish 0.2s forwards;
+    animation-delay: calc(var(--vanish-delay) * 0.01s);
 }
 
 .plus-one {
