@@ -102,20 +102,18 @@ function createNewGame() {
     startTimer();
   }
   
-  function addEmoticonToTile(tileSvg, emoji, tileSize) {
-    const emojiSize = Math.round(tileSize * 0.6); // Adjust size as needed
-    const x = Math.round((tileSize - emojiSize) / 2);
-    const y = Math.round((tileSize - emojiSize) / 2);
+function addEmoticonToTile(tileSvg, emoji, tileSize) {
+    const emojiSize = Math.round(tileSize * 0.4);
     
     const emojiSvg = `
-      <text x="${x}" y="${y + emojiSize * 0.8}" font-family="Arial" font-size="${emojiSize}px" fill="black">
+      <text x="50%" y="50%" font-family="Arial" font-size="${emojiSize}px" text-anchor="middle" dominant-baseline="central" fill="black">
         ${emoji}
       </text>
     `;
     
     return tileSvg.replace('</svg>', `${emojiSvg}</svg>`);
-  }
-
+}
+  
 
 function handleTileClick(event) {
     if (timeLeft <= 0) return;
