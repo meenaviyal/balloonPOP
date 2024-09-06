@@ -20,12 +20,13 @@ body {
     max-width: 500px;
 }
 
-h1 {
-    font-size: 4rem;
-    text-align: center;
-    margin-bottom: 24px;
+.logo {
+    display: block;
+    margin: 0 auto 24px;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
 }
-
 .game-info {
     display: flex;
     justify-content: space-between;
@@ -156,16 +157,4 @@ animation-delay: calc(var(--vanish-delay) * 0.03s);
     font-family: "Bungee Tint", sans-serif;
     font-weight: 400;
     font-style: normal;
-} 
-
-.nabla-font {
-    font-family: "Nabla", system-ui;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    font-variation-settings:
-      "EDPT" 100,
-      "EHLT" 12;
-    text-shadow: 2px 2px 4px rgba(125, 124, 124, 0.7);
-  }
-  
+}
