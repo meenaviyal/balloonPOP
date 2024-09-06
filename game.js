@@ -20,6 +20,24 @@ let totalCount = 0;
 let timeLeft = 20;
 let gameTimer;
 
+// Audio setup with pooling
+class SoundPool {
+    constructor(src, poolSize = 3) {
+        this.sounds = Array(poolSize).fill().map(() => new Audio(src));
+        this.currentIndex = 0;
+    }
+
+    play() {
+        this.sounds[this.currentIndex].currentTime = 0;
+        this.sounds[this.currentIndex].play();
+        this.currentIndex = (this.currentIndex + 1) % this.sounds.length;
+    }
+}
+
+const popSoundPool = new SoundPool('pop.mp3', 3);
+const errSoundPool = new SoundPool('err.mp3', 3);
+
+
 function getDevicePixelRatio() {
     return window.devicePixelRatio || 1;
 }
@@ -66,26 +84,27 @@ function handleTileClick(event) {
     const tileDiv = event.currentTarget;
     const tileIndex = parseInt(tileDiv.dataset.index);
     if (balloonLocations.get(tileIndex)) {
-        // Correct guess
-        tileDiv.classList.add('vanish');
-        const plusOne = document.createElement('div');
-        plusOne.textContent = '+1';
-        plusOne.className = 'plus-one';
-        tileDiv.appendChild(plusOne);
-        tileDiv.style.pointerEvents = 'none';
-        balloonLocations.delete(tileIndex);
-        score++;
-        updateScore();
+      // Correct guess
+      popSoundPool.play();
+      tileDiv.classList.add('vanish');
+      const plusOne = document.createElement('div');
+      plusOne.textContent = '+1';
+      plusOne.className = 'plus-one';
+      tileDiv.appendChild(plusOne);
+      tileDiv.style.pointerEvents = 'none';
+      balloonLocations.delete(tileIndex);
+      score++;
+      updateScore();
     } else {
-        // Incorrect guess
-        wrongGuesses++;
-        tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.add('shake'));
-        setTimeout(() => {
-            tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
-        }, 500);
-        tileDiv.innerHTML = getSadSmiley(wrongGuesses);
-        score = Math.max(0, score - 1);
-        updateScore();
+      // Incorrect guess
+      errSoundPool.play();
+      wrongGuesses++;
+      tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.add('shake'));
+      setTimeout(() => {
+        tileContainer.querySelectorAll('.tile').forEach(tile => tile.classList.remove('shake'));
+      }, 500);
+      tileDiv.innerHTML = getSadSmiley(wrongGuesses);
+      updateScore();
     }
 }
 
