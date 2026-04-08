@@ -1,21 +1,26 @@
 /* styles.css */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     background: linear-gradient(to bottom, #4a90e2, #7e57c2);
     color: white;
     margin: 0;
-    padding: 0;
+    padding: 16px;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .container {
     text-align: center;
     width: 100%;
     max-width: 500px;
+    margin: auto 0;
 }
 
 .logo {
@@ -31,6 +36,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     max-width: 400px;
+    margin: 0 auto 16px;
 }
 
 .start-button, #newGame {
@@ -57,7 +63,6 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 24px;
     width: 100%;
-    max-width: 500px;
 }
 
 .game-info {
@@ -88,6 +93,39 @@ body {
     #tileContainer {
         grid-template-columns: repeat(5, 1fr);
     }
+
+    body {
+        padding: 12px;
+    }
+
+    .game-container {
+        padding: 16px;
+    }
+
+    .logo {
+        max-width: 200px;
+        margin-bottom: 16px;
+    }
+
+    .game-info {
+        font-size: 1rem;
+    }
+
+    #timer, #score {
+        font-size: 1rem;
+    }
+
+    .white-background {
+        padding: 16px;
+    }
+
+    .tile-examples-container {
+        gap: 12px;
+    }
+
+    .tile-column h2 {
+        font-size: 1rem;
+    }
 }
 
 .tile {
@@ -116,7 +154,6 @@ body {
 }
 
 #gameOver {
-    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -125,6 +162,9 @@ body {
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    width: calc(100% - 32px);
+    max-width: 400px;
+    z-index: 10;
 }
 
 #gameOver h2 {
@@ -134,7 +174,7 @@ body {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 @keyframes fadeInOut {
